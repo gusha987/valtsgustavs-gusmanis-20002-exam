@@ -4,6 +4,8 @@ import { player } from '../stores/player'
 import { auth } from '../stores/auth'
 import IconHeart from '../components/icons/IconHeart.vue';
 import IconPlay from '../components/icons/IconPlay.vue';
+
+
 export default {
   components: { IconHeart, IconPlay, },
   data() {
@@ -26,16 +28,16 @@ export default {
       return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     },
     getArtists(artists) {
-      let temp = '';
+      let k = '';
       let len = Object.keys(artists).length;
-      artists.forEach((art, index) => {
-        if (index != len - 1) {
-          temp = temp + art.name + ", ";
+      artists.forEach((a, i) => {
+        if (i != len - 1) {
+          k = k + a.name + ", ";
         } else {
-          temp = temp + art.name;
+          k = k + a.name;
         }
       });
-      return temp;
+      return k;
     },
     selectSong(song) {
       player.setNowPlaying(song);
@@ -46,12 +48,12 @@ export default {
   computed: {
     filtered_songs() {
       let tests = this.songs;
-      let temp = [];
+      let k = [];
       
-      temp = tests.filter((song) => {
+      k = tests.filter((song) => {
         return song.name.toLowerCase().includes(this.search.toLowerCase())
       });
-      return temp;
+      return k;
     },
   }
 }

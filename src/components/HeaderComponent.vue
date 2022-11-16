@@ -1,19 +1,3 @@
-<script>
-import { auth } from '../stores/auth'
-export default {
-    data() {
-        return {
-            auth
-        }
-    },
-    computed: {
-        fullName() {
-            return auth.user.name + " " + auth.user.surname;
-        }
-    }
-}
-</script>
-
 <template>
     <div id="main-header" class="active">
         <div class="wrapper-logo">
@@ -29,3 +13,20 @@ export default {
         </div>
     </div>
 </template>
+
+
+<script>
+import { auth } from '../stores/auth'
+export default {
+    data() {
+        return {
+            auth
+        }
+    },
+    computed: {
+        fullName() {
+            return auth.user.name + " " + auth.user.surname;
+        }
+    }
+}
+</script>

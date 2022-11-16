@@ -1,3 +1,14 @@
+<template>
+  <nav id="nav-main" class="wrapper-navigation">
+    <ol>
+      <li v-for="address in addresses">
+        <RouterLink :to="{ path: address.path }">{{ address.name }}</RouterLink>
+      </li>
+    </ol>
+  </nav>
+</template>
+
+
 <script>
 export default {
   name: "NavigationComponent",
@@ -8,13 +19,3 @@ export default {
   }
 }
 </script>
-
-<template>
-  <nav id="nav-main" class="wrapper-navigation">
-    <ol>
-      <li v-for="address in addresses">
-        <RouterLink :to="{ path: address.path }">{{ address.name }}</RouterLink>
-      </li>
-    </ol>
-  </nav>
-</template>
