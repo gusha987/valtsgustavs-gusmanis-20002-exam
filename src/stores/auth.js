@@ -1,44 +1,52 @@
-import { reactive } from 'vue'
-import router from './src/router';
+import { reactive } from "vue";
+import router from '../router';
 
-export const auth = reactive ({
-    user : {
-        name : "Valts Gustavs",
-        surname : "Gusmanis",
-        code : "IT20002",
-        favorite_songs : [],
-    },
-    is_authenticated: localStorage.is_authenticated ?? false,
+export const auth = reactive({
+  user: {
+    name: localStorage.getItem("name") ?? "Valts Gustavs",
+    surname: localStorage.getItem("surname") ?? "Gusmanis",
+    code: localStorage.getItem("code") ?? "IT20002",
+    favorite_songs: JSON.parse(localStorage.getItem("favSongs")) ?? []
+  },
 
-    setUserData(name, surname,code){
-        this.user.name = name;
-        this.user.surname = surname;
-        this.user.code = code; 
-    },
-    authenticate(email, password){
-        if(email == "krista.briede@va.lv" && password == "123456"){
-        localStorage.is_authenticated = true;
-          this.is_authenticated = true;
-          router.replace('/')
-        }
-    },
-    logout(){
-        localStorage.clear();
-        this.is_authenticated = false;
-        router.replace('/login')
-    },
+  is_authenticated: localStorage.is_authenticated ?? false,
 
-    toggleFavorite(songID){
-       for(i = 0; i<=this.favorite_songs.length; i++){
-            if(this.favorite_songs[i] != songID){
-                this.favorite_songs.push(this.favorite_songs[i])
-            }
-            else{
-                this.favorite_songs.remove(this.favorite_songs[i])
-            }
-        }
-    },
-    getFavoriteSongs(){
-        return this.user.favorite_songs;
+  setUserData(name, surname, code) {
+    localStorage.setItem("name", name);
+    this.user.name = name;
+    localStorage.setItem("surname", surname);
+    this.user.surname = surname;
+    localStorage.setItem("code", code);
+    this.user.code = code;
+  },
+
+  authenticate(email, password) {
+    if (email === "valtsgustavs.gusmanis@va.lv" && password === "123456") {
+      localStorage.is_authenticated = true;
+      this.is_authenticated = true;
+      router.replace('/');
     }
+  },
+
+  logout() {
+    localStorage.clear();
+    this.is_authenticated = false;
+    router.replace('/login');
+  },
+
+  toggleFavorite(songID) {
+    let index = this.user.favorite_songs.indexOf(songID);
+
+    if (this.user.favorite_songs.includes(songID) == false) {
+      this.user.favorite_songs.push(songID);
+    } else {
+      this.user.favorite_songs.splice(index, 1);
+    }
+
+    localStorage.setItem("favSongs", JSON.stringify(this.user.favorite_songs));
+  },
+
+  getFavoriteSongs() {
+    return this.user.favorite_songs;
+  }
 });
